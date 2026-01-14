@@ -1,172 +1,195 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, Smartphone, Clock, ShieldCheck, Activity, Users, Star } from 'lucide-react';
+import { Activity, User, Stethoscope, ChevronRight, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Navbar = () => (
-    <nav style={{ padding: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 'bold', fontSize: '1.5rem', color: 'var(--primary)' }}>
-            <Activity size={32} />
-            <span>MediQueue</span>
-        </div>
-        <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-            <a href="#features" style={{ textDecoration: 'none', color: 'var(--text-main)', fontWeight: 500 }}>Features</a>
-            <a href="#pricing" style={{ textDecoration: 'none', color: 'var(--text-main)', fontWeight: 500 }}>Pricing</a>
-            <Link to="/clinic" className="btn btn-secondary" style={{ padding: '0.5rem 1.25rem' }}>Login</Link>
-            <Link to="/clinic" className="btn btn-primary" style={{ padding: '0.5rem 1.25rem' }}>Get Started</Link>
+    <nav className="navbar fixed top-0 w-full z-30 transition-all duration-300" style={{ height: '80px', background: 'rgba(255, 255, 255, 0.8)', backdropFilter: 'blur(12px)', borderBottom: '1px solid var(--border)' }}>
+        <div className="container flex justify-between items-center h-full">
+            <div className="flex items-center gap-sm text-primary" style={{ fontSize: '1.75rem', fontWeight: 800 }}>
+                <Activity size={32} strokeWidth={2.5} />
+                <span style={{ letterSpacing: '-0.5px' }}>MediQueue</span>
+            </div>
+            <div className="flex gap-lg hide-mobile items-center">
+                <Link to="/login/doctor" className="font-medium text-muted hover:text-primary transition px-4 py-2 rounded-full hover:bg-gray-50">For Doctors</Link>
+                <div style={{ width: 1, height: 24, background: 'var(--border)' }}></div>
+                <Link to="/login/patient" className="btn btn-primary shadow-lg hover:shadow-xl transition-all">Book Appointment</Link>
+            </div>
         </div>
     </nav>
 );
 
-const Hero = () => (
-    <section style={{ padding: '4rem 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }} className="container">
-        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-            <h1 style={{ fontSize: '3.5rem', lineHeight: 1.1, marginBottom: '1.5rem', fontWeight: 800 }}>
-                Stop Making Your Patients <span className="text-gradient">Wait in the Dark.</span>
-            </h1>
-            <p style={{ fontSize: '1.25rem', color: 'var(--text-muted)', marginBottom: '2.5rem', maxWidth: '500px' }}>
-                Transform your waiting room into a smart, digital experience. Real-time updates, reduced crowding, and peace of mind.
-            </p>
-            <div style={{ display: 'flex', gap: '1rem' }}>
-                <Link to="/clinic" className="btn btn-primary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
-                    Get a Free Demo <ChevronRight size={20} />
-                </Link>
-                <Link to="/patient" className="btn btn-secondary" style={{ padding: '1rem 2rem', fontSize: '1.125rem' }}>
-                    Simulate Patient <Smartphone size={20} />
-                </Link>
-            </div>
-            <div style={{ marginTop: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-muted)', fontSize: '0.875rem' }}>
-                <ShieldCheck size={16} color="var(--success)" /> Trusted by 500+ Clinics Nationwide
-            </div>
-        </motion.div>
-
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="card" style={{ background: 'linear-gradient(135deg, white 0%, #f0f9ff 100%)', minHeight: '500px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', border: '1px solid #e0f2fe' }}>
-            {/* Abstract Visual Representation of Calm vs Chaos */}
-            <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '6rem', marginBottom: '1rem' }}>😌</div>
-                <h3 style={{ color: 'var(--primary)', marginBottom: '0.5rem' }}>Relaxed & Informed</h3>
-                <p style={{ color: 'var(--text-muted)' }}>"Dr. Smith will see you in 15 mins"</p>
-                <div style={{ marginTop: '2rem', padding: '1rem', background: 'white', borderRadius: '12px', boxShadow: 'var(--shadow-lg)', display: 'inline-block' }}>
-                    <div style={{ fontSize: '0.875rem', color: '#888' }}>Your Token</div>
-                    <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: 'var(--primary)' }}>A-104</div>
-                    <div style={{ height: '4px', width: '100%', background: '#e2e8f0', borderRadius: '2px', marginTop: '0.5rem' }}>
-                        <div style={{ height: '100%', width: '70%', background: 'var(--success)', borderRadius: '2px' }}></div>
-                    </div>
-                </div>
-            </div>
-        </motion.div>
-    </section>
-);
-
-const Feature = ({ icon: Icon, title, desc }) => (
-    <div className="card" style={{ textAlign: 'left' }}>
-        <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--surface)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--primary)', marginBottom: '1.5rem' }}>
-            <Icon size={24} />
-        </div>
-        <h3 style={{ marginBottom: '0.75rem', fontSize: '1.25rem' }}>{title}</h3>
-        <p style={{ color: 'var(--text-muted)', lineHeight: 1.6 }}>{desc}</p>
-    </div>
-);
-
-const Features = () => (
-    <section id="features" style={{ padding: '6rem 0', background: 'var(--surface)' }}>
-        <div className="container">
-            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>The "Waiting Room Anxiety" is Real</h2>
-                <p style={{ color: 'var(--text-muted)', maxWidth: '600px', margin: '0 auto' }}>
-                    Crowded rooms and uncertain wait times drive patients away. MediQueue solves this with transparency.
-                </p>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-                <Feature icon={Smartphone} title="Real-Time Transparency" desc="Patients see their exact position in line on their phone. No app install required." />
-                <Feature icon={Clock} title="Smart ETA Engine" desc="Dynamic calculation of wait times based on actual consultation durations." />
-                <Feature icon={Users} title="Crowd Control" desc="Keep your lobby empty. Patients arrive just in time when notified." />
-            </div>
-        </div>
-    </section>
-);
-
-const SocialProof = () => (
-    <section style={{ padding: '6rem 0', textAlign: 'center' }}>
-        <div className="container">
-            <blockquote style={{ fontSize: '1.75rem', fontWeight: 500, fontStyle: 'italic', maxWidth: '800px', margin: '0 auto 2rem auto', color: 'var(--text-main)' }}>
-                "Since implementing MediQueue, our lobby is 60% less crowded, and our patient satisfaction scores have skyrocketed."
-            </blockquote>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
-                <div style={{ width: '50px', height: '50px', borderRadius: '50%', background: '#ddd' }}></div>
-                <div style={{ textAlign: 'left' }}>
-                    <div style={{ fontWeight: 'bold' }}>Dr. Aris V.</div>
-                    <div style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>City Health Clinic</div>
-                </div>
-            </div>
-        </div>
-    </section>
-);
-
-const PricingCard = ({ title, price, features, highlighted = false }) => (
-    <div className="card" style={{
-        border: highlighted ? '2px solid var(--primary)' : '1px solid #e2e8f0',
-        transform: highlighted ? 'scale(1.05)' : 'none',
-        zIndex: highlighted ? 1 : 0,
-        display: 'flex', flexDirection: 'column'
-    }}>
-        <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: highlighted ? 'var(--primary)' : 'inherit' }}>{title}</h3>
-        <div style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '2rem' }}>{price}</div>
-        <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', flex: 1 }}>
-            {features.map((f, i) => (
-                <li key={i} style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--text-muted)' }}>
-                    <ShieldCheck size={18} color="var(--success)" /> {f}
-                </li>
-            ))}
-        </ul>
-        <button className={highlighted ? "btn btn-primary" : "btn btn-secondary"} style={{ width: '100%' }}>
-            Choose {title}
-        </button>
-    </div>
-);
-
-const Pricing = () => (
-    <section id="pricing" style={{ padding: '6rem 0', background: '#f8fafc' }}>
-        <div className="container">
-            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Transparent Pricing</h2>
-                <p style={{ color: 'var(--text-muted)' }}>Choose the plan that fits your clinic size.</p>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', alignItems: 'center' }}>
-                <PricingCard
-                    title="Starter"
-                    price="$29/mo"
-                    features={['Single Doctor', 'Basic Queue', 'Digital Token URL']}
-                />
-                <PricingCard
-                    title="Professional"
-                    price="$79/mo"
-                    features={['Multi-Specialty', 'SMS/WhatsApp Alerts', 'Basic Analytics', 'Priority Support']}
-                    highlighted={true}
-                />
-                <PricingCard
-                    title="Enterprise"
-                    price="Custom"
-                    features={['Unlimited Doctors', 'API Access', 'Custom Branding', 'On-premise Deployment']}
-                />
-            </div>
-        </div>
-    </section>
-);
-
 const LandingPage = () => {
     return (
-        <div className="animate-fade-in">
+        <div className="animate-fade-in" style={{ overflowX: 'hidden' }}>
             <Navbar />
-            <Hero />
-            <Features />
-            <SocialProof />
-            <Pricing />
-            <footer style={{ padding: '4rem 0', textAlign: 'center', background: '#1e293b', color: 'white' }}>
+
+            {/* Hero Section */}
+            <section className="container" style={{ paddingTop: '160px', paddingBottom: '100px', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <div className="grid grid-responsive gap-8 items-center" style={{ gap: '4rem' }}>
+                    <div className="flex flex-col gap-6">
+                        <div className="inline-block px-4 py-2 bg-blue-50 text-primary rounded-full text-sm font-bold border border-blue-100 w-fit">
+                            🚀 #1 Queue Management System in Pune
+                        </div>
+                        <motion.h1
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6 }}
+                            style={{ fontSize: 'clamp(3rem, 6vw, 4.5rem)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.03em', color: 'var(--text-main)' }}
+                        >
+                            Smart Healthcare <br />
+                            <span className="text-primary" style={{ position: 'relative', display: 'inline-block' }}>
+                                Queue Management
+                                <svg style={{ position: 'absolute', bottom: -5, left: 0, width: '100%', height: 12, fill: 'var(--primary-light)', zIndex: -1, opacity: 0.5 }} viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5 L 100 10 L 0 10 Z" /></svg>
+                            </span>
+                        </motion.h1>
+                        <p className="text-muted" style={{ fontSize: '1.25rem', maxWidth: '600px', lineHeight: 1.8 }}>
+                            Reduce waiting times and improve patient experience with our intelligent real-time queuing system. Join 500+ clinics today.
+                        </p>
+
+                        <div className="flex gap-6 flex-col sm:flex-row mt-4">
+                            <Link to="/login/patient" className="btn btn-primary" style={{ padding: '1.25rem 2.5rem', fontSize: '1.1rem', boxShadow: '0 20px 40px -15px rgba(14, 165, 233, 0.5)' }}>
+                                <User size={20} /> I am a Patient
+                            </Link>
+                            <Link to="/login/doctor" className="btn btn-secondary" style={{ padding: '1.25rem 2.5rem', fontSize: '1.1rem' }}>
+                                <Stethoscope size={20} /> I am a Doctor
+                            </Link>
+                        </div>
+
+                        <div className="mt-10 flex items-center gap-6 text-sm text-muted pt-6 border-t border-dashed">
+                            <div className="flex items-center gap-2">
+                                <div className="flex gap-0.5 text-warning"><span className="font-bold text-main text-lg mr-1">4.9/5</span> ★★★★★</div>
+                            </div>
+                            <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+                            <span>Trusted by <strong>10,000+</strong> users</span>
+                        </div>
+                    </div>
+
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.3, duration: 0.8 }}
+                        className="card relative flex items-center justify-center bg-card"
+                        style={{
+                            minHeight: '520px',
+                            borderRadius: '32px',
+                            border: '1px solid var(--border)',
+                            boxShadow: 'var(--shadow-xl)',
+                            overflow: 'hidden'
+                        }}
+                    >
+
+
+                        <div className="text-center relative z-10 w-full px-8">
+                            <div className="flex items-center justify-center gap-6 mb-6">
+                                <div style={{ fontSize: '6rem', filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.1))', lineHeight: 1 }}>⏱️</div>
+
+                                <motion.div
+                                    animate={{ y: [0, -10, 0] }}
+                                    transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                                    className="bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-lg flex items-center gap-3 border border-gray-100 text-left"
+                                >
+                                    <div className="bg-green-100 text-green-600 p-2 rounded-full"><CheckCircle size={20} /></div>
+                                    <div>
+                                        <div className="font-bold text-sm text-black">Real-time</div>
+                                        <div className="text-xs text-secondary">Status Updates</div>
+                                    </div>
+                                </motion.div>
+                            </div>
+
+                            <h3 style={{ fontSize: '2rem', marginBottom: '0.5rem', color: 'var(--text-main)' }}>Live Tracking</h3>
+                            <p className="text-muted mb-8 text-lg">Save 45 minutes on average</p>
+
+                            <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+                                <div className="card text-left" style={{ padding: '2rem 3rem', background: 'var(--bg-card)', display: 'inline-block', minWidth: '280px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}>
+                                    <div className="text-xs text-muted uppercase font-bold tracking-widest mb-3">Your Token</div>
+                                    <div className="text-primary" style={{ fontSize: '3.5rem', fontWeight: 800, lineHeight: 1 }}>A-12</div>
+                                    <div className="w-full h-3 bg-gray-100 rounded-full mt-6 overflow-hidden">
+                                        <div className="h-full bg-primary w-2/3 rounded-full relative overflow-hidden">
+                                            <div className="absolute top-0 left-0 bottom-0 right-0 bg-white opacity-20" style={{ transform: 'skewX(-20deg) translateX(-50%)', animation: 'shimmer 2s infinite' }}></div>
+                                        </div>
+                                    </div>
+                                    <div className="text-sm text-muted mt-3 font-medium flex justify-between">
+                                        <span>Wait time</span>
+                                        <span className="text-primary font-bold">10 mins</span>
+                                    </div>
+                                </div>
+
+                                <motion.div
+                                    animate={{ y: [0, -6, 0] }}
+                                    transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                                    className="w-52 bg-white/60 backdrop-blur-sm border border-white/50 p-5 rounded-2xl shadow-xl text-left hidden md:block"
+                                >
+                                    <div className="flex justify-between items-center mb-3">
+                                        <span className="text-[10px] font-bold text-muted uppercase tracking-wider">Update</span>
+                                        <span className="text-[10px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">Active</span>
+                                    </div>
+                                    <div className="text-xl font-bold text-primary flex items-center gap-2">
+                                        Q-104
+                                        <span className="text-xs font-normal text-muted">→ Q-105</span>
+                                    </div>
+                                    <div className="mt-3 text-[10px] text-muted font-medium italic">
+                                        Refreshing position...
+                                    </div>
+                                </motion.div>
+                            </div>
+                        </div>
+
+                        {/* Background blobs */}
+                        <div className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+                            <div className="absolute top-[-50px] right-[-50px] w-64 h-64 bg-primary-light rounded-full blur-3xl opacity-30"></div>
+                            <div className="absolute bottom-[-50px] left-[-50px] w-64 h-64 bg-success rounded-full blur-3xl opacity-20"></div>
+                        </div>
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Features */}
+            <section style={{ padding: '8rem 0', background: 'var(--bg-card)' }}>
                 <div className="container">
-                    <h2 style={{ marginBottom: '2rem' }}>Ready to eliminate the "Wait"?</h2>
-                    <Link to="/clinic" className="btn btn-primary" style={{ padding: '1rem 2.5rem' }}>Start Your 14-Day Free Trial</Link>
-                    <div style={{ marginTop: '3rem', fontSize: '0.875rem', opacity: 0.6 }}>© 2026 MediQueue Inc. All rights reserved.</div>
+                    <div className="text-center mb-20">
+                        <h2 className="text-4xl font-bold mb-6 text-main">Why Choose MediQueue?</h2>
+                        <p className="text-muted text-xl max-w-2xl mx-auto leading-relaxed">We bridge the gap between busy waiting rooms and comfortable patient experiences.</p>
+                    </div>
+
+                    <div className="grid grid-responsive gap-8">
+                        {/* Status Update Card */}
+                        <div className="card p-10 hover:transform hover:-translate-y-2 transition-all duration-300 border-none shadow-lg hover:shadow-2xl bg-body relative overflow-visible group">
+                            {/* Small animated indicator */}
+                            <motion.div
+                                animate={{ scale: [1, 1.2, 1] }}
+                                transition={{ repeat: Infinity, duration: 2 }}
+                                className="absolute top-6 right-6 w-3 h-3 bg-green-500 rounded-full shadow-[0_0_10px_#22c55e]"
+                            ></motion.div>
+
+                            <div className="text-5xl mb-8 relative z-0">📲</div>
+                            <h3 style={{ fontSize: '1.75rem', marginBottom: '1rem', color: 'var(--text-main)', position: 'relative', zIndex: 0 }}>Real-Time Updates</h3>
+                            <p className="text-muted text-lg leading-relaxed mb-6 relative z-0">Track your live position from anywhere via our mobile-friendly dashboard.</p>
+
+                            {/* Decorative Blur */}
+                            <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-green-100 rounded-full blur-2xl opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
+                        </div>
+
+                        {[
+                            { title: 'Multi-Specialty Support', desc: 'Seamlessly manage various departments and doctors under one roof.', icon: '🏥' },
+                            { title: 'Hospital Dashboard', desc: 'Complete control for clinic administration with analytics and reports.', icon: '📊' }
+                        ].map((item, i) => (
+                            <div key={i} className="card p-10 hover:transform hover:-translate-y-2 transition-all duration-300 border-none shadow-lg hover:shadow-2xl bg-body">
+                                <div className="text-5xl mb-8">{item.icon}</div>
+                                <h3 style={{ fontSize: '1.75rem', marginBottom: '1rem', color: 'var(--text-main)' }}>{item.title}</h3>
+                                <p className="text-muted text-lg leading-relaxed">{item.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <footer className="py-16 bg-gray-50 border-t">
+                <div className="container text-center text-muted">
+                    <div className="flex items-center justify-center gap-3 mb-6 font-bold text-2xl text-primary">
+                        <Activity size={28} /> MediQueue
+                    </div>
+                    <p className="text-lg">© 2026 MediQueue. All rights reserved.</p>
                 </div>
             </footer>
         </div>
