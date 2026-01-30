@@ -2,6 +2,56 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Activity, User, Stethoscope, ChevronRight, CheckCircle } from 'lucide-react';
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
+import { useEffect, useState } from 'react';
+
+const CustomCursor = () => {
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [isHovering, setIsHovering] = useState(false);
+
+    useEffect(() => {
+        const moveCursor = (e) => {
+            setPosition({ x: e.clientX, y: e.clientY });
+        };
+        const handleOver = (e) => {
+            if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A' || e.target.closest('button')) {
+                setIsHovering(true);
+            } else {
+                setIsHovering(false);
+            }
+        };
+
+        window.addEventListener('mousemove', moveCursor);
+        window.addEventListener('mouseover', handleOver);
+        return () => {
+            window.removeEventListener('mousemove', moveCursor);
+            window.removeEventListener('mouseover', handleOver);
+        };
+    }, []);
+
+    return (
+        <div className="hidden md:block">
+            <motion.div
+                className="custom-cursor"
+                animate={{
+                    x: position.x - 10,
+                    y: position.y - 10,
+                    scale: isHovering ? 1.5 : 1
+                }}
+                transition={{ type: "spring", damping: 20, stiffness: 250, mass: 0.5 }}
+            />
+            <motion.div
+                className="custom-cursor-follower"
+                animate={{
+                    x: position.x - 20,
+                    y: position.y - 20,
+                    scale: isHovering ? 2 : 1,
+                    opacity: isHovering ? 0.5 : 1
+                }}
+                transition={{ type: "spring", damping: 30, stiffness: 200, mass: 0.8 }}
+            />
+        </div>
+    );
+};
 
 const TypewriterText = ({ text, className, style }) => {
     const letters = Array.from(text);
@@ -215,8 +265,23 @@ const FloatingLoginButton = () => {
 };
 
 const LandingPage = () => {
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        const elements = document.querySelectorAll('.reveal-on-scroll');
+        elements.forEach(el => observer.observe(el));
+        return () => elements.forEach(el => observer.unobserve(el));
+    }, []);
+
     return (
         <div className="bg-animated-gradient min-h-screen text-white" style={{ overflowX: 'hidden' }}>
+            <CustomCursor />
             <Navbar />
             <BackgroundWaves />
             <Particles />
@@ -224,7 +289,7 @@ const LandingPage = () => {
             <FloatingLoginButton />
 
             {/* Hero Section */}
-            <section className="container" style={{ paddingTop: '160px', paddingBottom: '100px', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
+            <section className="container reveal-on-scroll" style={{ paddingTop: '160px', paddingBottom: '100px', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
                 <div className="grid grid-responsive gap-8 items-center" style={{ gap: '4rem' }}>
                     <div className="flex flex-col gap-6">
                         <motion.div
@@ -360,7 +425,7 @@ const LandingPage = () => {
             </section>
 
             {/* Features */}
-            <section style={{ padding: '8rem 0', background: 'transparent' }}>
+            <section className="reveal-on-scroll" style={{ padding: '8rem 0', background: 'transparent' }}>
                 <div className="container">
                     <motion.div
                         initial={{ opacity: 0, y: 50 }}

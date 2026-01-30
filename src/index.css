@@ -137,6 +137,51 @@ body {
   line-height: 1.5;
   transition: background-color 0.3s, color 0.3s;
   overflow-x: hidden;
+  cursor: none;
+  /* Hide default for custom cursor */
+}
+
+@media (max-width: 768px) {
+  body {
+    cursor: auto;
+  }
+
+  /* Normal cursor on mobile */
+}
+
+.custom-cursor {
+  width: 20px;
+  height: 20px;
+  background: var(--neon-cyan);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: screen;
+  box-shadow: 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-cyan);
+  transition: transform 0.1s ease;
+}
+
+.custom-cursor-follower {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--neon-purple);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.15s ease, width 0.3s, height 0.3s;
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal-on-scroll.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .bg-animated-gradient {
