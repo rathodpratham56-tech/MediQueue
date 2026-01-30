@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const QueueContext = createContext();
 
@@ -28,55 +28,30 @@ export const QueueProvider = ({ children }) => {
                 { id: 201, name: 'Dr. R. Deshpande', specialty: 'Orthopedics', room: 'Ortho-1', status: 'Available', timings: '09:00 AM – 1:00 PM' },
                 { id: 202, name: 'Dr. M. Kulkarni', specialty: 'Pediatrics', room: 'Ped-3', status: 'On Break', timings: '10:00 AM – 4:00 PM' }
             ]
-        },
-        {
-            id: 3,
-            name: 'Sahyadri Hospital',
-            branch: 'Deccan Gymkhana',
-            address: 'Plot No. 30, Erandwane, Pune',
-            emergencyContact: '+91-20-67215000',
-            doctors: [
-                { id: 301, name: 'Dr. S. Joshi', specialty: 'Oncology', room: 'Onc-A', status: 'Available', timings: '02:00 PM – 6:00 PM' }
-            ]
-        },
-        {
-            id: 4,
-            name: 'Deenanath Mangeshkar',
-            branch: 'Erandwane',
-            address: 'Near Mhatre Bridge, Pune',
-            emergencyContact: '+91-20-40151000',
-            doctors: [
-                { id: 401, name: 'Dr. V. Gokhale', specialty: 'General Surgery', room: 'Surg-B', status: 'Available', timings: '08:00 AM – 12:00 PM' }
-            ]
-        },
-        {
-            id: 5,
-            name: 'Sancheti Hospital',
-            branch: 'Shivajinagar',
-            address: '16, Shivajinagar, Pune',
-            emergencyContact: '+91-20-25533333',
-            doctors: [
-                { id: 501, name: 'Dr. P. Sancheti', specialty: 'Orthopedics', room: 'Ortho-Main', status: 'Available', timings: '09:00 AM – 12:00 PM' }
-            ]
         }
     ]);
 
-    // Used for compatibility with existing code where single hospital focus was used in doctor dashboard
-    // In a real multi-tenant app, the doctor login would determine which hospital they belong to.
-    // For now, let's keep a method to get "my hospital" based on login, defaulting to first.
     const getHospitalForDoctor = () => hospitals[0];
 
+    // Initial Mock Queue with extra details
     const [queue, setQueue] = useState([
-        { id: 101, name: 'John Doe', token: 'A-101', status: 'waiting', doctorId: 101, hospitalId: 1 },
-        { id: 102, name: 'Jane Smith', token: 'A-102', status: 'waiting', doctorId: 101, hospitalId: 1 },
+        {
+            id: 1001, name: 'Amit Rahul', token: 'A-101', status: 'waiting',
+            mobile: '9876543210', whatsapp: '9876543210', email: 'amit@example.com',
+            age: '28', gender: 'Male', symptoms: 'Mild headache, fatigue',
+            doctorId: 101, hospitalId: 1, alertSent: null
+        },
+        {
+            id: 1002, name: 'Sonal Patil', token: 'A-102', status: 'confirmed',
+            mobile: '9123456789', whatsapp: '9123456789', email: 'sonal@example.com',
+            age: '24', gender: 'Female', symptoms: 'Regular checkup',
+            doctorId: 101, hospitalId: 1, alertSent: 'SMS'
+        },
     ]);
 
     const [currentServing, setCurrentServing] = useState({});
-
-    // Patient History & Reports (Mock Database)
     const [patientHistory, setPatientHistory] = useState([
-        { id: 1, patientName: 'Guest Patient', hospital: 'Ruby Hall Clinic', doctor: 'Dr. A. K. Singh', date: '2024-03-10', diagnosis: 'Mild Hypertension', prescription: 'Tab. Amlodipine 5mg', reportUrl: '#' },
-        { id: 2, patientName: 'Guest Patient', hospital: 'Jehangir Hospital', doctor: 'Dr. R. Deshpande', date: '2024-01-15', diagnosis: 'Ankle Sprain', prescription: 'Rest, Ice, Compression', reportUrl: '#' }
+        { id: 1, patientName: 'Guest Patient', hospital: 'Ruby Hall Clinic', doctor: 'Dr. A. K. Singh', date: '2024-03-10', diagnosis: 'Mild Hypertension', prescription: 'Tab. Amlodipine 5mg', reportUrl: '#' }
     ]);
 
     // Actions
@@ -92,31 +67,48 @@ export const QueueProvider = ({ children }) => {
         }));
     };
 
+    const updatePatientStatus = (patientId, newStatus) => {
+        setQueue(prev => prev.map(p => p.id === patientId ? { ...p, status: newStatus } : p));
+    };
+
     const nextPatient = (hospitalId, doctorId) => {
-        const next = queue.find(p => p.doctorId === doctorId && p.status === 'waiting' && p.hospitalId === hospitalId);
+        const next = queue.find(p => p.doctorId === doctorId && (p.status === 'waiting' || p.status === 'confirmed') && p.hospitalId === hospitalId);
         if (next) {
             setQueue(prev => prev.map(p => p.id === next.id ? { ...p, status: 'serving' } : p));
             setCurrentServing(prev => ({ ...prev, [doctorId]: next.token }));
         }
     };
 
+    const sendAlertToPatient = (patientId, type, message) => {
+        // Mocking API call
+        setQueue(prev => prev.map(p => p.id === patientId ? { ...p, alertSent: type, lastMessage: message } : p));
+        return true;
+    };
+
     const joinQueue = (patientDetails, hospitalId, doctorId) => {
-        const tokenNum = queue.filter(q => q.hospitalId === hospitalId).length + 100;
+        const tokenNum = queue.filter(q => q.hospitalId === parseInt(hospitalId)).length + 100;
         const newToken = `Q-${tokenNum}`;
         const newPatient = {
             id: Date.now(),
             name: patientDetails.name,
             token: newToken,
             status: 'waiting',
+            mobile: patientDetails.mobile || '',
+            whatsapp: patientDetails.whatsapp || '',
+            email: patientDetails.email || '',
+            age: patientDetails.age || '',
+            gender: patientDetails.gender || '',
+            symptoms: patientDetails.symptoms || '',
             doctorId: parseInt(doctorId),
-            hospitalId: parseInt(hospitalId)
+            hospitalId: parseInt(hospitalId),
+            alertSent: null
         };
         setQueue(prev => [...prev, newPatient]);
         return newPatient;
     };
 
     const getDoctorQueue = (doctorId) => {
-        return queue.filter(p => p.doctorId === parseInt(doctorId) && p.status === 'waiting');
+        return queue.filter(p => p.doctorId === parseInt(doctorId) && p.status !== 'serving' && p.status !== 'cancelled');
     };
 
     const addReport = (report) => {
@@ -131,6 +123,8 @@ export const QueueProvider = ({ children }) => {
             currentServing,
             patientHistory,
             updateDoctorStatus,
+            updatePatientStatus,
+            sendAlertToPatient,
             nextPatient,
             joinQueue,
             getDoctorQueue,
@@ -140,3 +134,4 @@ export const QueueProvider = ({ children }) => {
         </QueueContext.Provider>
     );
 };
+沟通:
