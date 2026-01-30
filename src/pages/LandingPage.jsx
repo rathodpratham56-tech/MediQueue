@@ -186,12 +186,42 @@ const Navbar = () => (
     </nav>
 );
 
+const BackgroundWaves = () => {
+    return (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-cyan-500/20 to-transparent animate-wave-slow"></div>
+            <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-purple-500/20 to-transparent animate-wave-medium delay-1000"></div>
+            <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-cyan-500/30 to-transparent animate-wave-fast delay-2000"></div>
+        </div>
+    );
+};
+
+const FloatingLoginButton = () => {
+    return (
+        <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 2.5, duration: 0.8, type: "spring", stiffness: 100 }}
+            className="fixed bottom-6 right-6 z-50"
+        >
+            <Link
+                to="/login/patient"
+                className="btn btn-primary shadow-lg hover:shadow-xl transition-all hover-neon-cyan shake-on-hover animate-breathing flex items-center gap-2 px-6 py-3 text-lg"
+            >
+                Book Appointment <ChevronRight size={20} />
+            </Link>
+        </motion.div>
+    );
+};
+
 const LandingPage = () => {
     return (
         <div className="bg-animated-gradient min-h-screen text-white" style={{ overflowX: 'hidden' }}>
             <Navbar />
+            <BackgroundWaves />
             <Particles />
             <RobotAssistant />
+            <FloatingLoginButton />
 
             {/* Hero Section */}
             <section className="container" style={{ paddingTop: '160px', paddingBottom: '100px', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
