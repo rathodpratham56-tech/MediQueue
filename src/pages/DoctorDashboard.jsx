@@ -52,10 +52,10 @@ const DoctorDashboard = () => {
 
             {/* Sidebar */}
             <aside className={`
-                fixed md:relative top-[61px] md:top-0 left-0 w-full md:w-64 bg-white border-r border-gray-200 p-6 flex flex-col h-[calc(100vh-61px)] md:h-screen z-10 transition-transform duration-300 ease-in-out
+                fixed md:relative top-[61px] md:top-0 left-0 w-full md:w-64 glass border-r border-gray-200 p-6 flex flex-col h-[calc(100vh-61px)] md:h-screen z-10 transition-transform duration-300 ease-in-out
                 ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
             `}>
-                <div className="hidden md:flex text-xl font-bold text-primary mb-10 items-center gap-2">
+                <div className="hidden md:flex text-xl font-bold text-primary neon-text-cyan mb-10 items-center gap-2">
                     <Users /> DoctorPanel
                 </div>
                 <div className="flex flex-col gap-3 w-full">
@@ -84,10 +84,10 @@ const DoctorDashboard = () => {
                             </div>
                         </div>
                         <div className="flex flex-col items-end gap-3">
-                            <div className={`badge ${myDoctorProfile.status === 'Available' ? 'badge-success' : 'badge-danger'} text-sm py-2 px-4 shadow-sm transition-all duration-300`}>
+                            <div className={`badge ${myDoctorProfile.status === 'Available' ? 'badge-success neon-border-teal' : 'badge-danger neon-border-purple'} text-sm py-2 px-4 shadow-sm transition-all duration-300`}>
                                 ● {myDoctorProfile.status}
                             </div>
-                            <div className="flex items-center gap-3 bg-white p-2 rounded-xl border shadow-sm px-4">
+                            <div className="flex items-center gap-3 glass p-2 rounded-xl border shadow-sm px-4">
                                 <span className="text-xs font-bold text-muted uppercase tracking-wider">Availability</span>
                                 <label className="switch">
                                     <input
@@ -98,7 +98,7 @@ const DoctorDashboard = () => {
                                             updateDoctorStatus(myHospital.id, myDoctorProfile.id, newStatus);
                                         }}
                                     />
-                                    <span className="slider"></span>
+                                    <span className="slider neon-pulse-cyan"></span>
                                 </label>
                             </div>
                         </div>
@@ -108,9 +108,9 @@ const DoctorDashboard = () => {
                     {activeTab === 'queue' && (
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-fade-in">
                             {/* Controller */}
-                            <div className="card border-t-4 border-t-primary lg:col-span-1 h-fit">
+                            <div className="card glass neon-border-cyan lg:col-span-1 h-fit p-6">
                                 <div className="text-muted text-xs uppercase font-bold tracking-widest mb-4">Now Serving</div>
-                                <div style={{ fontSize: '4.5rem', fontWeight: 800, color: 'var(--primary)', lineHeight: 1, marginBottom: '1.5rem' }}>
+                                <div className="neon-text-cyan neon-pulse-cyan" style={{ fontSize: '4.5rem', fontWeight: 800, color: 'var(--primary)', lineHeight: 1, marginBottom: '1.5rem', textAlign: 'center', borderRadius: '1rem' }}>
                                     {currentServing[myDoctorProfile.id] || '--'}
                                 </div>
                                 <div className="flex flex-col gap-3">
@@ -122,7 +122,7 @@ const DoctorDashboard = () => {
                             </div>
 
                             {/* List */}
-                            <div className="card lg:col-span-2">
+                            <div className="card lg:col-span-2 glass p-6">
                                 <div className="flex justify-between items-center mb-6">
                                     <h3 className="m-0">Waiting List <span className="text-muted font-normal ml-2">({myQueue.length})</span></h3>
                                     <button className="text-primary text-sm font-bold hover:underline">View All</button>
@@ -135,9 +135,9 @@ const DoctorDashboard = () => {
                                 ) : (
                                     <div className="flex flex-col gap-3">
                                         {myQueue.map((p, i) => (
-                                            <div key={p.id} className="flex justify-between items-center p-4 bg-white border rounded-xl hover:shadow-md transition">
+                                            <div key={p.id} className="flex justify-between items-center p-4 glass border rounded-xl hover:shadow-md transition hover-neon-cyan">
                                                 <div className="flex items-center gap-4">
-                                                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-sm font-bold text-muted border">
+                                                    <div className="w-8 h-8 rounded-full bg-primary-light flex items-center justify-center text-sm font-bold text-primary border border-primary">
                                                         {i + 1}
                                                     </div>
                                                     <div>
@@ -145,7 +145,7 @@ const DoctorDashboard = () => {
                                                         <div className="text-xs text-muted">General Checkup</div>
                                                     </div>
                                                 </div>
-                                                <span className="font-bold text-xl text-primary">{p.token}</span>
+                                                <span className="font-bold text-xl text-primary neon-text-cyan">{p.token}</span>
                                             </div>
                                         ))}
                                     </div>

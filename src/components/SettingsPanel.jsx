@@ -19,7 +19,7 @@ const SettingsPanel = () => {
             <h2 className="mb-8 text-2xl font-bold">Account Settings</h2>
 
             {/* Profile Section */}
-            <div className="card mb-8">
+            <div className="card glass neon-border-cyan mb-8">
                 <div className="flex items-center gap-6 p-6">
                     <div className="w-20 h-20 rounded-full bg-primary-light flex items-center justify-center text-primary text-3xl font-bold border-4 border-white shadow-sm">
                         {user?.name.charAt(0)}
@@ -34,7 +34,7 @@ const SettingsPanel = () => {
 
             {/* Application Settings */}
             <h3 className="text-sm text-muted mb-4 uppercase tracking-wider font-bold pl-2">Preferences</h3>
-            <div className="card mb-8 p-0 overflow-hidden">
+            <div className="card glass neon-border-blue mb-8 p-0 overflow-hidden">
                 <div className="flex justify-between items-center p-4 border-b hover:bg-gray-50 transition cursor-pointer">
                     <div className="flex items-center gap-4">
                         <div className="p-2 bg-blue-50 text-blue-600 rounded-lg"><Bell size={20} /></div>
@@ -97,7 +97,7 @@ const SettingsPanel = () => {
 
             {/* Security & Support */}
             <h3 className="text-sm text-muted mb-4 uppercase tracking-wider font-bold pl-2">Security & Support</h3>
-            <div className="card p-0 overflow-hidden mb-8">
+            <div className="card glass p-0 overflow-hidden mb-8">
                 <div className="flex justify-between items-center p-4 border-b hover:bg-gray-50 transition cursor-pointer">
                     <div className="flex items-center gap-4">
                         <div className="p-2 bg-orange-50 text-orange-600 rounded-lg"><Lock size={20} /></div>

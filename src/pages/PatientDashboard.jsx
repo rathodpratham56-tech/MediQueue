@@ -41,8 +41,8 @@ const PatientDashboard = () => {
     return (
         <div className="min-h-screen bg-body flex flex-col md:flex-row">
             {/* Mobile Bottom Nav / Desktop Sidebar */}
-            <nav className="fixed bottom-0 left-0 w-full md:w-72 bg-white md:h-screen border-t md:border-t-0 md:border-r border-gray-200 z-30 flex md:flex-col justify-around md:justify-start p-2 md:p-6 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] md:shadow-none bg-white/95 backdrop-blur-md md:bg-white md:relative">
-                <div className="hidden md:flex items-center gap-2 font-bold text-2xl text-primary mb-12 px-2">
+            <nav className="fixed bottom-0 left-0 w-full md:w-72 glass md:h-screen border-t md:border-t-0 md:border-r border-gray-200 z-30 flex md:flex-col justify-around md:justify-start p-2 md:p-6 shadow-lg bg-white/95 backdrop-blur-md md:relative">
+                <div className="hidden md:flex items-center gap-2 font-bold text-2xl text-primary neon-text-cyan mb-12 px-2">
                     MediQueue
                 </div>
 
@@ -140,9 +140,9 @@ const PatientDashboard = () => {
                                             <div className="flex justify-between items-start mb-4">
                                                 <div>
                                                     <div className="font-bold text-lg mb-1">{doc.name}</div>
-                                                    <div className="text-primary text-sm font-medium">{doc.specialty}</div>
+                                                    <div className="text-primary text-sm font-medium neon-text-cyan">{doc.specialty}</div>
                                                 </div>
-                                                <div className={`badge ${doc.status === 'Available' ? 'badge-success' : 'badge-danger'} text-[10px] px-3 py-1 shadow-sm`}>
+                                                <div className={`badge ${doc.status === 'Available' ? 'badge-success neon-border-teal' : 'badge-danger neon-border-purple'} text-[10px] px-3 py-1 shadow-sm`}>
                                                     ● {doc.status}
                                                 </div>
                                             </div>
@@ -159,7 +159,7 @@ const PatientDashboard = () => {
                                             <button
                                                 onClick={() => handleJoinQueue(doc)}
                                                 disabled={doc.status !== 'Available'}
-                                                className={`btn w-full mt-auto ${doc.status === 'Available' ? 'btn-primary shadow-md' : 'btn-secondary opacity-50 cursor-not-allowed'}`}
+                                                className={`btn w-full mt-auto ${doc.status === 'Available' ? 'btn-primary shadow-md hover-neon-cyan' : 'btn-secondary opacity-50 cursor-not-allowed'}`}
                                             >
                                                 {doc.status === 'Available' ? 'Join Queue' : 'Unavailable'}
                                             </button>
@@ -175,10 +175,10 @@ const PatientDashboard = () => {
                 {activeTab === 'active' && (
                     <div className="h-full flex items-center justify-center animate-fade-in py-10">
                         {myTokenData ? (
-                            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="card w-full max-w-md text-center p-8 shadow-xl border-t-8 border-t-primary">
+                            <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="card glass neon-border-cyan w-full max-w-md text-center p-8 shadow-xl">
                                 <div className="text-xs text-muted uppercase font-bold tracking-widest mb-4">Live Token</div>
-                                <h1 className="text-7xl text-primary font-bold mb-4 tracking-tighter">{myTokenData.token}</h1>
-                                <div className="badge badge-primary text-sm px-4 py-1 mb-8 shadow-sm">
+                                <h1 className="text-7xl text-primary neon-text-cyan neon-pulse-cyan font-bold mb-4 tracking-tighter" style={{ borderRadius: '2rem' }}>{myTokenData.token}</h1>
+                                <div className="badge badge-primary neon-border-blue text-sm px-4 py-1 mb-8 shadow-sm">
                                     {myTokenData.status}
                                 </div>
 

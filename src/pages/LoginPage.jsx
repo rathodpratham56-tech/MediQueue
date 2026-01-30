@@ -38,8 +38,8 @@ const LoginPage = ({ role }) => {
                 initial={{ opacity: 0, y: 30, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
-                className="card"
-                style={{ width: '100%', maxWidth: '440px', padding: '2.5rem', position: 'relative', zIndex: 10, borderTop: `4px solid var(--${role === 'doctor' ? 'primary' : 'success'})` }}
+                className="card glass neon-border-cyan"
+                style={{ width: '100%', maxWidth: '440px', padding: '2.5rem', position: 'relative', zIndex: 10 }}
             >
                 <div className="mb-6 flex items-center text-muted hover:text-primary transition cursor-pointer" onClick={() => navigate('/')}>
                     <ChevronLeft size={16} /> <span className="text-sm font-medium">Back to Home</span>
@@ -184,7 +184,7 @@ const LoginPage = ({ role }) => {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         type="submit"
-                        className="btn btn-primary"
+                        className="btn btn-primary hover-neon-cyan"
                         style={{ width: '100%', marginTop: '1rem', height: '48px', fontSize: '1rem' }}
                     >
                         {role === 'doctor' ? 'Access Dashboard' : 'Continue'} <ArrowRight size={18} />
